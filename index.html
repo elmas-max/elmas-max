@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tagal Oyunları</title>
+  <style>
+    body {
+      font-family: "Press Start 2P", sans-serif;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a0/Avşa_Adası.jpg'); /* Avşa Adası manzarası */
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .menu {
+      background-color: rgba(44, 44, 44, 0.8); /* Opaklık ekledik */
+      padding: 20px;
+      border: 4px solid #000;
+      border-radius: 8px;
+      box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.8);
+      text-align: center;
+      width: 300px;
+    }
+
+    .menu h1 {
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .menu button {
+      background-color: #ff0000;
+      color: white;
+      border: 2px solid #000;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 0;
+      width: 100%;
+    }
+
+    .menu button:hover {
+      background-color: #cc0000;
+    }
+
+    .menu button:active {
+      background-color: #990000;
+      transform: scale(0.98);
+    }
+
+    canvas {
+      background-color: #000000;
+      display: none;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #ff0000; /* Sigma-i Kıram yazısı kırmızı */
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .footer:hover {
+      color: #ffd700;
+    }
+
+    .about {
+      color: #00ff00; /* Yeşil renk */
+      font-size: 16px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .about img {
+      width: 20px;
+      margin-left: 10px;
+    }
+
+    .egetube-section {
+      display: none;
+      margin-top: 50px;
+      width: 80%;
+      text-align: center;
+    }
+
+    .egetube-section h2 {
+      color: #ff0000;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .egetube-logo {
+      width: 150px;
+      margin-top: 20px;
+    }
+
+    .egetube-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      margin: 10px 0;
+    }
+
+    .egetube-links a:hover {
+      color: #ffd700;
+    }
+
+    .egetube-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .video-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .video-container iframe {
+      width: 300px;
+      height: 200px;
+      margin: 10px;
+    }
+
+    .go-back-button {
+      background-color: #ff0000;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .go-back-button:hover {
+      background-color: #cc0000;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <h1>Tagal Oyunları</h1>
+    <button onclick="startSnakeGame()">Tek Oyunculu (Yılan)</button>
+    <button onclick="startParkour()">Parkur</button>
+    <button onclick="startMeteorGame()">Meteor Oyunu</button>
+    <button onclick="showEgetube()">Egetube</button>
+    <button onclick="showMessage()">Çıkış</button>
+  </div>
+
+  <canvas id="snakeGame" width="400" height="400"></canvas>
+  <canvas id="parkourGame" width="600" height="400"></canvas>
+  <canvas id="meteorGame" width="800" height="600"></canvas>
+
+  <div class="footer" onclick="showSigmaMessage()">
+    Sigma-i Kıram kimdir?
+  </div>
+
+  <div class="about">
+    <p>Merhaba ben Ege, 18 Aralık'ta İstanbul'da doğdum, tagallık yok! <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Flag_of_Turkey.svg/1024px-Flag_of_Turkey.svg.png" alt="Türk Bayrağı"></p>
+  </div>
+
+  <div class="egetube-section" id="egetubeSection">
+    <h2>Egetube</h2>
+    <img class="egetube-logo" src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
+
+    <!-- Diğer Video Linkleri -->
+    <div class="egetube-links">
+      <a href="https://www.youtube.com/watch?v=O2ayBUoCCo0" target="_blank">Baldiback Burak - Video 1</a>
+      <a href="https://www.youtube.com/watch?v=i8PAqnUYd84" target="_blank">Mavislime - Video 2</a>
+      <a href="https://www.youtube.com/watch?v=vMOD9Tmb5yg" target="_blank">Video 3</a>
+      <a href="https://www.youtube.com/watch?v=Yq3D5xJ6HUk" target="_blank">Baldiback Burak - Video 4</a>
+      <a href="https://www.youtube.com/watch?v=xf5wr6aGbzE" target="_blank">Mavislime - Video 5</a>
+    </div>
+
+    <!-- YouTube Video Embedleri -->
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/O2ayBUoCCo0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/i8PAqnUYd84" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/vMOD9Tmb5yg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <button class="go-back-button" onclick="goBackToMenu()">Geri Dön</button>
+  </div>
+
+  <script>
+    function showMessage() {
+      alert("Tagallık yok!");
+    }
+
+    function showSigmaMessage() {
+      alert("Adamın dibi, üstaddır!");
+    }
+
+    function showEgetube() {
+      document.querySelector('.menu').style.display = 'none';
+      document.getElementById('egetubeSection').style.display = 'block';
+    }
+
+    function goBackToMenu() {
+      document.getElementById('egetubeSection').style.display = 'none';
+      document.querySelector('.menu').style.display = 'block';
+    }
+
+    function startSnakeGame() {
+      document.querySelector('.menu').style.display = 'none';
+      const canvas = document.getElementById('snakeGame');
+      const ctx = canvas.getContext('2d');
+      canvas.style.display = 'block';
+
+      let snake = [{ x: 200, y: 200 }];
+      let direction = { x: 0, y: 0 };
+      let nextDirection = { x: 20, y: 0 };
+      let food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random() * 20) * 20 };
+      let gameInterval;
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowUp' && direction.y === 0) nextDirection = { x: 0, y: -20 };
+        if (event.key === 'ArrowDown' && direction.y === 0) nextDirection = { x: 0, y: 20 };
+        if (event.key === 'ArrowLeft' && direction.x === 0) nextDirection = { x: -20, y: 0 };
+        if (event.key === 'ArrowRight' && direction.x === 0) nextDirection = { x: 20, y: 0 };
+      });
+
+      function gameLoop() {
+        direction = nextDirection;
+        const newHead = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+        if (newHead.x < 0 || newHead.x >= 400 || newHead.y < 0 || newHead.y >= 400 || snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+          clearInterval(gameInterval);
+          alert('Oyun Bitti! Skor: ' + (snake.length - 1));
+          location.reload();
+          return;
+        }
+
+        if (newHead.x === food.x && newHead.y === food.y) {
+          food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random() * 20) * 20 };
+        } else {
+          snake.pop();
+        }
+
+        snake.unshift(newHead);
+
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, 400, 400);
+
+        ctx.fillStyle = '#0f0';
+        snake.forEach(segment => ctx.fillRect(segment.x, segment.y, 20, 20));
+
+        ctx.fillStyle = '#f00';
+        ctx.fillRect(food.x, food.y, 20, 20);
+      }
+
+      gameInterval = setInterval(gameLoop, 100);
+    }
+
+    function startParkour() {
+      document.querySelector('.menu').style.display = 'none';
+      const canvas = document.getElementById('parkourGame');
+      const ctx = canvas.getContext('2d');
+      canvas.style.display = 'block';
+
+      const player = { x: 50, y: 300, width: 20, height: 20, dx: 0, dy: 0, speed: 5, onGround: true };
+      const platforms = [
+        { x: 0, y: 350, width: 600, height: 10 },
+        { x: 150, y: 300, width: 100, height: 10 },
+        { x: 300, y: 250, width: 100, height: 10 },
+        { x: 450, y: 200, width: 100, height: 10 },
+      ];
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === ' ' && player.onGround) {
+          player.dy = -12;
+          player.onGround = false;
+        }
+        if (event.key === 'ArrowRight') {
+          player.dx = player.speed;
+        } else if (event.key === 'ArrowLeft') {
+          player.dx = -player.speed;
+        }
+      });
+
+      document.addEventListener('keyup', (event) => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          player.dx = 0;
+        }
+      });
+
+      function gameLoop() {
+        player.x += player.dx;
+        player.y += player.dy;
+        player.dy += 0.5;
+
+        player.onGround = false;
+        platforms.forEach(platform => {
+          if (
+            player.x < platform.x + platform.width &&
+            player.x + player.width > platform.x &&
+            player.y + player.height >= platform.y &&
+            player.y + player.height <= platform.y + platform.height
+          ) {
+            player.onGround = true;
+            player.dy = 0;
+            player.y = platform.y - player.height;
+          }
+        });
+
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, 600, 400);
+
+        ctx.fillStyle = '#00f';
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        ctx.fillStyle = '#8B4513';
+        platforms.forEach(platform => ctx.fillRect(platform.x, platform.y, platform.width, platform.height));
+      }
+
+      setInterval(gameLoop, 1000 / 60);
+    }
+
+    function startMeteorGame() {
+      document.querySelector('.menu').style.display = 'none';
+      const canvas = document.getElementById('meteorGame');
+      const ctx = canvas.getContext('2d');
+      canvas.style.display = 'block';
+
+      const player = { x: 375, y: 550, width: 50, height: 50, speed: 5 };
+      let meteors = [];
+      let score = 0;
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' && player.x > 0) {
+          player.x -= player.speed;
+        } else if (event.key === 'ArrowRight' && player.x < canvas.width - player.width) {
+          player.x += player.speed;
+        }
+      });
+
+      function generateMeteor() {
+        const x = Math.random() * (canvas.width - 50);
+        meteors.push({ x: x, y: 0, width: 50, height: 50, speed: Math.random() * 2 + 2 });
+      }
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        score++;
+
+        meteors.forEach((meteor, index) => {
+          meteor.y += meteor.speed;
+          ctx.fillStyle = '#ff0000';
+          ctx.fillRect(meteor.x, meteor.y, meteor.width, meteor.height);
+
+          if (meteor.y > canvas.height) {
+            meteors.splice(index, 1);
+          }
+
+          if (
+            meteor.x < player.x + player.width &&
+            meteor.x + meteor.width > player.x &&
+            meteor.y < player.y + player.height &&
+            meteor.y + meteor.height > player.y
+          ) {
+            alert(`Oyun Bitti! Skor: ${score}`);
+            location.reload();
+          }
+        });
+
+        ctx.fillStyle = '#00f';
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '20px Arial';
+        ctx.fillText('Skor: ' + score, 20, 30);
+      }
+
+      setInterval(gameLoop, 1000 / 60);
+      setInterval(generateMeteor, 2000);
